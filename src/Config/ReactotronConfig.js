@@ -1,9 +1,10 @@
 import Reactotron from 'reactotron-react-native';
-import {reactotronRedux} from 'reactotron-redux';
+import { reactotronRedux } from 'reactotron-redux';
 import reactotronSaga from 'reactotron-redux-saga';
+import { REACTOTRON_HOST } from 'react-native-dotenv';
 
 if (__DEV__) {
-  const tron = Reactotron.configure({host: '192.168.15.53'})
+  const tron = Reactotron.configure({ host: REACTOTRON_HOST })
     .useReactNative()
     .use(reactotronRedux())
     .use(reactotronSaga())
