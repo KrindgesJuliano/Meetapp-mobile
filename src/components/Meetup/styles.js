@@ -1,0 +1,47 @@
+import styled from 'styled-components/native';
+
+import Buttons from '~/components/Buttons';
+
+export const Container = styled.View`
+  margin-bottom: 20px;
+  background: #fff;
+  border-radius: 4px;
+  display: flex;
+`;
+
+export const Image = styled.Image`
+  flex: 1;
+  height: 150px;
+`;
+
+export const Info = styled.View`
+  padding: 20px;
+`;
+
+export const Title = styled.Text`
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+`;
+
+export const Time = styled.Text`
+  margin-top: 5px;
+  font-size: 13px;
+  color: #999;
+`;
+
+export const Locale = styled.Text`
+  margin-top: 5px;
+  font-size: 13px;
+  color: #999;
+`;
+
+export const Host = styled.Text`
+  margin-top: 5px;
+  font-size: 13px;
+  color: #999;
+`;
+
+export const SubscriberButton = styled(Buttons)`
+  margin-top: 15px;
+`;
