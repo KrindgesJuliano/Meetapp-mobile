@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { withNavigationFocus } from 'react-navigation';
+import { showMessage } from 'react-native-flash-message';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -12,33 +14,45 @@ import Meetup from '~/components/Meetup';
 
 import { Container, List } from './styles';
 
-export default function Subscriptions() {
+function Subscriptions(isFocused) {
   const profile = useSelector(state => state.user.profile);
   const [subscription, setsubscription] = useState([]);
 
+  async function loadingSubscription() {
+    const response = await api.get(`subs/${profile.id}`);
+    const data = response.data.map(sub => ({
+      ...sub.Meetup,
+      formattedDate: format(parseISO(sub.Meetup.date), "MMMM d', às' hh'h'mm", {
+        locale: pt,
+      }),
+    }));
+
+    setsubscription(data);
+  }
+
   useEffect(() => {
-    async function loadingSubscription() {
-      const response = await api.get(`subs/${profile.id}`);
-      const data = response.data.map(sub => ({
-        ...sub.Meetup,
-        formattedDate: format(
-          parseISO(sub.Meetup.date),
-          "MMMM d', às' hh'h'mm",
-          {
-            locale: pt,
-          }
-        ),
-      }));
-
-      setsubscription(data);
+    if (isFocused) {
+      loadingSubscription();
     }
-
-    loadingSubscription();
-  }, [profile.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFocused]);
 
   async function handleCancel({ id }) {
-    console.tron.log({ id });
-    await api.delete(`subs/${id}`);
+    try {
+      await api.delete(`subs/${id}`);
+
+      loadingSubscription();
+
+      showMessage({
+        message: 'Inscrição cancelada',
+        type: 'info',
+      });
+    } catch (err) {
+      showMessage({
+        message: 'Ocorreu algum erro ao cancelar a inscricao',
+        type: 'danger',
+      });
+    }
   }
 
   return (
@@ -67,3 +81,5 @@ Subscriptions.navigationOptions = {
     <Icon name="local-offer" size={20} color={tintColor} />
   ),
 };
+
+export default withNavigationFocus(Subscriptions);

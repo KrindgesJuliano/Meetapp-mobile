@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { showMessage } from 'react-native-flash-message';
 import { TouchableOpacity } from 'react-native';
 import { format, parseISO, subDays, addDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -14,6 +15,7 @@ import { Container, DataTime, Time, List } from './styles';
 
 export default function Dashboard() {
   const [meetups, setMeetups] = useState([]);
+  const [page, setPage] = useState(1);
   const [date, setDate] = useState(new Date());
 
   const dateFormatted = useMemo(
@@ -21,24 +23,39 @@ export default function Dashboard() {
     [date]
   );
 
+  function formatMeetups(noFormattedMeetups) {
+    return noFormattedMeetups.map(meetup => ({
+      ...meetup,
+      formattedDate: format(parseISO(meetup.date), "MMMM d', às' hh'h'mm", {
+        locale: pt,
+      }),
+    }));
+  }
+
   useEffect(() => {
     async function loadingMeetups() {
       const response = await api.get('meetups', { params: { date } });
-      const data = response.data.map(meetup => ({
-        ...meetup,
-        formattedDate: format(parseISO(meetup.date), "MMMM d', às' hh'h'mm", {
-          locale: pt,
-        }),
-      }));
 
-      setMeetups(data);
+      setMeetups(formatMeetups(response.data));
     }
 
     loadingMeetups();
   }, [date]);
 
   async function handleSubscribe(id) {
-    await api.post(`meetups/${id}/subs`);
+    try {
+      await api.post(`meetups/${id}/subs`);
+
+      showMessage({
+        message: 'Inscricao realizada com sucesso!',
+        type: 'info',
+      });
+    } catch (error) {
+      showMessage({
+        message: 'nao foi possivel realizar a inscricao',
+        type: 'danger',
+      });
+    }
   }
 
   function handlePrevDay() {
@@ -47,6 +64,17 @@ export default function Dashboard() {
 
   function handleNextDay() {
     setDate(addDays(date, 1));
+  }
+
+  async function loadMoreMeetups() {
+    const nextPage = page + 1;
+
+    const response = await api.get('meetups', {
+      params: { date, page: nextPage },
+    });
+
+    setMeetups([...meetups, ...formatMeetups(response.data)]);
+    setPage(nextPage);
   }
 
   return (
@@ -66,6 +94,8 @@ export default function Dashboard() {
         <List
           data={meetups}
           keyExtractor={item => String(item.id)}
+          onEndReachedThreshold={0.2}
+          onEndReached={loadMoreMeetups}
           renderItem={({ item }) => (
             <Meetup
               onButton={() => handleSubscribe(item.id)}
