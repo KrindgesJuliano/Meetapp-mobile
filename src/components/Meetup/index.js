@@ -5,7 +5,7 @@ import Buttons from '~/components/Buttons';
 
 import { Container, Image, Info, Title, Time, Locale, Host } from './styles';
 
-export default function Meetup({ data, onSubscribe, children }) {
+export default function Meetup({ data, onButton, ButtonText }) {
   return (
     <Container>
       <Image
@@ -28,7 +28,7 @@ export default function Meetup({ data, onSubscribe, children }) {
           Organizador: {data.User.name}
         </Host>
       </Info>
-      <Buttons onPress={onSubscribe}>{children}</Buttons>
+      <Buttons onPress={onButton}>{ButtonText}</Buttons>
     </Container>
   );
 }

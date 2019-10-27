@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/Services/api';
 
 import Background from '~/components/Background';
-import Buttons from '~/components/Buttons';
 import Meetup from '~/components/Meetup';
 
 import { Container, Header, Time, List } from './styles';
@@ -67,9 +66,9 @@ export default function Dashboard() {
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <Meetup
-              onSubscribe={() => handleSubscribe(item.id)}
+              onButton={() => handleSubscribe(item.id)}
               data={item}
-              children="Realizar Inscricao"
+              ButtonText="Realizar Inscrição"
             />
           )}
         />
