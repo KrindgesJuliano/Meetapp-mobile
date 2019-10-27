@@ -3,7 +3,16 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Buttons from '~/components/Buttons';
 
-import { Container, Image, Info, Title, Time, Locale, Host } from './styles';
+import {
+  Container,
+  Image,
+  Info,
+  Title,
+  Time,
+  Locale,
+  Host,
+  IconText,
+} from './styles';
 
 export default function Meetup({ data, onButton, ButtonText }) {
   return (
@@ -15,18 +24,18 @@ export default function Meetup({ data, onButton, ButtonText }) {
       />
       <Info>
         <Title>{data.title}</Title>
-        <Time>
+        <IconText>
           <Icon name="event" size={14} color="#999" />
-          {data.formattedDate}
-        </Time>
-        <Locale>
+          <Time>{data.formattedDate}</Time>
+        </IconText>
+        <IconText>
           <Icon name="place" size={14} color="#999" />
-          {data.location}
-        </Locale>
-        <Host>
+          <Locale>{data.location}</Locale>
+        </IconText>
+        <IconText>
           <Icon name="person" size={14} color="#999" />
-          Organizador: {data.User.name}
-        </Host>
+          <Host>Organizador: {data.User.name}</Host>
+        </IconText>
       </Info>
       <Buttons onPress={onButton}>{ButtonText}</Buttons>
     </Container>
