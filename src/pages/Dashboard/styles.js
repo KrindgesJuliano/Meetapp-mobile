@@ -4,7 +4,7 @@ export const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
-export const Header = styled.View`
+export const DataTime = styled.View`
   display: flex;
   align-items: center;
   align-content: center;

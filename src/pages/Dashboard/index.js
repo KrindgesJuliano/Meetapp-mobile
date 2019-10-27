@@ -7,9 +7,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/Services/api';
 
 import Background from '~/components/Background';
+import Header from '~/components/Header';
 import Meetup from '~/components/Meetup';
 
-import { Container, Header, Time, List } from './styles';
+import { Container, DataTime, Time, List } from './styles';
 
 export default function Dashboard() {
   const [meetups, setMeetups] = useState([]);
@@ -51,7 +52,8 @@ export default function Dashboard() {
   return (
     <Background>
       <Container>
-        <Header>
+        <Header />
+        <DataTime>
           <TouchableOpacity onPress={handlePrevDay}>
             <Icon name="chevron-left" size={30} color="#fff" />
           </TouchableOpacity>
@@ -59,7 +61,7 @@ export default function Dashboard() {
           <TouchableOpacity onPress={handleNextDay}>
             <Icon name="chevron-right" size={30} color="#fff" />
           </TouchableOpacity>
-        </Header>
+        </DataTime>
 
         <List
           data={meetups}

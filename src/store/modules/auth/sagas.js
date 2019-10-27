@@ -36,6 +36,11 @@ export function* signUp({ payload }) {
       email,
       password,
     });
+
+    Alert.alert(
+      'Conta criada com sucesso!',
+      'Nova conta foi criado com sucesso'
+    );
   } catch (err) {
     Alert.alert(
       'Falha no cadastro',

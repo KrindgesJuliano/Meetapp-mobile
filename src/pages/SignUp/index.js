@@ -6,7 +6,7 @@ import Background from '~/components/Background';
 
 import { signUpRequest } from '~/store/modules/auth/actions';
 
-import Logo from '~/assets/logo.svg';
+import Logo from '~/assets/logo.png';
 import {
   Container,
   Form,

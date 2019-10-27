@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/Services/api';
 
 import Background from '~/components/Background';
+import Header from '~/components/Header';
 import Meetup from '~/components/Meetup';
 
 import { Container, List } from './styles';
@@ -42,6 +43,7 @@ export default function Subscriptions() {
 
   return (
     <Background>
+      <Header />
       <Container>
         <List
           data={subscription}

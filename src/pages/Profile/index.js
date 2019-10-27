@@ -7,6 +7,7 @@ import { updateProfileRequest } from '~store/modules/user/actions';
 import { signOut } from '~store/modules/auth/actions';
 
 import Background from '~/components/Background';
+import Header from '~/components/Header';
 import {
   Container,
   Separator,
@@ -55,6 +56,7 @@ export default function Profile() {
   return (
     <Background>
       <Container>
+        <Header />
         <Form>
           <FormInput
             icon="person-outline"
