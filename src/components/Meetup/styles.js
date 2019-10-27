@@ -1,12 +1,11 @@
 import styled from 'styled-components/native';
 
-import Buttons from '~/components/Buttons';
-
 export const Container = styled.View`
   margin-bottom: 20px;
   background: #fff;
   border-radius: 4px;
   display: flex;
+  padding: 20px;
 `;
 
 export const Image = styled.Image`
@@ -40,8 +39,4 @@ export const Host = styled.Text`
   margin-top: 5px;
   font-size: 13px;
   color: #999;
-`;
-
-export const SubscriberButton = styled(Buttons)`
-  margin-top: 15px;
 `;

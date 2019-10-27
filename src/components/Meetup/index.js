@@ -1,43 +1,34 @@
 import React from 'react';
-import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import {
-  Container,
-  Image,
-  Info,
-  Title,
-  Time,
-  Locale,
-  Host,
-  SubscriberButton,
-} from './styles';
+import Buttons from '~/components/Buttons';
 
-export default function Meetup() {
+import { Container, Image, Info, Title, Time, Locale, Host } from './styles';
+
+export default function Meetup({ data, onSubscribe, children }) {
   return (
     <Container>
       <Image
         source={{
-          uri:
-            'https://cdn.shopify.com/s/files/1/0229/0839/files/Como_organizar_un_Shopify_MeetUp.jpeg',
+          uri: data.imagem.url,
         }}
       />
       <Info>
-        <Title>Meetup de React Native</Title>
+        <Title>{data.title}</Title>
         <Time>
           <Icon name="event" size={14} color="#999" />
-          24 de Junho, as 2-h
+          {data.formattedDate}
         </Time>
         <Locale>
           <Icon name="place" size={14} color="#999" />
-          Rua Guilherme Gembala, 260
+          {data.location}
         </Locale>
         <Host>
           <Icon name="person" size={14} color="#999" />
-          Organizador: diego Fernandes
+          Organizador: {data.User.name}
         </Host>
-        <SubscriberButton>Realizar inscricao</SubscriberButton>
       </Info>
+      <Buttons onPress={onSubscribe}>{children}</Buttons>
     </Container>
   );
 }
